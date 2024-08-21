@@ -1,14 +1,17 @@
 
 
-const DescriptionCell = ({ isEditing, value }) => {
-
+const DescriptionCell = ({ isEditing, value, onValueChange }) => {
   return isEditing ? (
     <td>
-        <input type="text" value={value} />
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onValueChange(e.target.value)}
+      />
     </td>
   ) : (
     <td>{value}</td>
-  )
-}
+  );
+};
 
-export default DescriptionCell
+export default DescriptionCell;

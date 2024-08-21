@@ -2,17 +2,41 @@ import ModeButtons from './ModeButtons';
 import DescriptionCell from './DescriptionCell';
 import RateCell from './RateCell';
 import HoursCell from './HoursCell';
+import { useState } from 'react';
 
 const TableRow = ({ initialIsEditing, initialInvoiceData }) => {
 
-  const { description, rate, hours} = initialInvoiceData;
+  const [editMode, setEditMode] = useState(initialIsEditing);
+  const [description, setDescription] = useState(initialInvoiceData.description);
+  const [rate, setRate] = useState(initialInvoiceData.rate);
+  const [hours, setHours] = useState(initialInvoiceData.hours);
+
+  // Define functions to set editMode back and forth
+  const changeEditMode = () => setEditMode(true);
+  const changeNormalMode = () => setEditMode(false);
 
   return (
     <tr>
-      <ModeButtons isEditing={initialIsEditing} />
-      <DescriptionCell isEditing={initialIsEditing} value={description} />
-      <RateCell isEditing={initialIsEditing} value={rate} />
-      <HoursCell isEditing={initialIsEditing} value={hours} />
+      <ModeButtons 
+        isEditing={editMode}
+        editClick={changeEditMode}
+        saveClick={changeNormalMode}
+        />
+      <DescriptionCell
+        isEditing={editMode}
+        value={description} 
+        onValueChange={setDescription} 
+        />
+      <RateCell
+        isEditing={editMode}
+        value={rate}
+        onValueChange={setRate} 
+        />
+      <HoursCell 
+        isEditing={editMode}
+        value={hours}
+        onValueChange={setHours}
+      /> 
     </tr>
   );
 };
