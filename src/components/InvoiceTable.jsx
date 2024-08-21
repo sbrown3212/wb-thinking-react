@@ -1,14 +1,46 @@
 import './InvoiceTable.css';
-import ModeButtons from './ModeButtons';
-import DescriptionCell from './DescriptionCell';
-import RateCell from './RateCell';
-import HoursCell from './HoursCell';
+import TableHeader from './TableHeader';
+import AddRowButton from './AddRowButton';
+import TableRow from './TableRow';
 
-const InvoiceTable = () => {
+const InvoiceTable = ({ initialData }) => {
+  console.log(`INITIAL DATA:`, initialData)
   return (
     <div>
-      InvoiceTable goes here
-      <HoursCell isEditing={false} value={'my hours'}/>
+      <table>
+        <thead>
+          <TableHeader />
+        </thead>
+
+        <tbody>
+          <TableRow 
+            initialIsEditing={true}
+            initialInvoiceData={initialData[0]}
+          />
+          <TableRow 
+            initialIsEditing={true}
+            initialInvoiceData={initialData[1]}
+          />
+          <TableRow 
+            initialIsEditing={true}
+            initialInvoiceData={initialData[2]}
+          />
+          <TableRow 
+            initialIsEditing={true}
+            initialInvoiceData={initialData[3]}
+          />
+          {/* <TableRow 
+            initialIsEditing={true}
+            description={"test description 2"}
+            rate={100}
+            hours={25}
+          /> */}
+        </tbody>
+
+        <tfoot>
+          <AddRowButton />
+        </tfoot>
+      </table>
     </div>
   )
 }

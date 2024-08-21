@@ -2,7 +2,12 @@
 
 const AddRowButton = () => {
   return (
-    <div>AddRowButton</div>
+    <tr>
+      <td></td>
+      <td colSpan={4}>
+        <button>Add Row</button>
+      </td>
+    </tr>
   )
 }
 
