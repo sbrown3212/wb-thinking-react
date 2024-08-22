@@ -11,17 +11,31 @@ app.use(express.urlencoded({ extended: false })); // Allows express to interpret
 app.use(express.static('public')) // for certain imports, check the 'public' directory first; good to include 
 app.use(express.json()) // lets server and front-end know that they'll be communication with JSON
 
-// Set up global variable to mock a DB:
-const TEST_DATA = [
-  { id: 0, description: 'Content plan', rate: 30, hours: 4 },
-  { id: 1, description: 'Copy writing', rate: 40, hours: 2 },
-  { id: 2, description: 'Website design', rate: 50, hours: 5 },
-  { id: 3, description: 'Website development', rate: 100, hours: 5 },
-];
+// import handler functions object from controller file
+import handlerFunctions from './controller.js';
 
 // Routes:
+// Before creating endpoints, address the following:
+// - What is the purpose of this endpoint?
+// - Will I need any query/param/body objects?
+// - What will the endpoint string look like? (url)
+// - What should the response look like? (keep consistent)
 
+// First endpoint (GET):
+// - To serve up an array of our invoice objects (TEST_DATA)
+// - No additional client info needed
+// - '/api/invoices' (--> full URL when hosted locally: http://localhost:2319/api/invoices)
+// - { message: "", invoices: [] } --> res.send({ message: "", invoices: [] })
+app.get('/api/invoices', handlerFunctions.getInvoices)
 
+// Second endpoint (POST):
+// - Add a new row to our invoice data array
+// - Body object:
+//    - description, rate, horus
+// - '/api/addInvoice'
+// - Send back new object with a message:
+//    - { message: "", newInvoice: {} }
+app.post('/api/addInvoice', handlerFunctions.addInvoice)
 
 // Open up  door to server
 ViteExpress.listen(app, 2319, () => console.log(`We've got a 23-19! Report to http://localhost:2319`));
