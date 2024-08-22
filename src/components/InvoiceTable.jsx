@@ -3,12 +3,11 @@ import TableHeader from './TableHeader';
 import AddRowButton from './AddRowButton';
 import TableRow from './TableRow';
 import { useState, useEffect } from 'react';
-
-let globalId = 4;
+import axios from 'axios';
 
 const InvoiceTable = ({ initialData }) => {
 
-  console.log('INITIAL DATA:', initialData);
+  // console.log('INITIAL DATA:', initialData);
 
   // Creates a new array of data to edit
   const [currentData, setCurrentData] = useState(initialData);
@@ -32,22 +31,25 @@ const InvoiceTable = ({ initialData }) => {
   const addRow = () => {
     // create a new object to represent a new 'row' or entry in the currentData array
     const newRow = {
-      id: globalId,
-      description: 'Description',
-      rate: '',
-      hours: '',
+      description: 'Description placeholder',
+      rate: '1',
+      hours: '1',
     }
 
-    // add 'newRow' to 'currentData'
-    setCurrentData([...currentData, newRow]);
+    axios.post('/api/addInvoice', newRow)
+    .then((response) => {
+      console.log(response.data);
+      setCurrentData([...currentData, response.data.newInvoice]);
+    });
 
-    globalId++;
   };
 
   const deleteRow = (id) => {
-    const filteredData = currentData.filter((el) => el.id !== id);
-
-    setCurrentData(filteredData);
+    axios.delete(`/api/deleteInvoice/${id}`)
+    .then((response) => {
+      // Need to reset currentData to the filtered array
+      setCurrentData(response.data.invoices)
+    })
   };
 
   return (

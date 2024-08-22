@@ -37,5 +37,19 @@ app.get('/api/invoices', handlerFunctions.getInvoices)
 //    - { message: "", newInvoice: {} }
 app.post('/api/addInvoice', handlerFunctions.addInvoice)
 
+// Third endpoint (DELETE):
+// - Delete a specific invoice from TEST_DATA
+// - Need 'id' from request.prams
+// - '/api/deleteInvoice/:id'
+// - { message: "", invoices: [] }
+app.delete('/api/deleteInvoice/:id', handlerFunctions.deleteInvoice) // params for a delete request is probably not a good idea in an actual application (not very secure)
+
+// Fourth endpoint (PUT):
+// - Update rate/description/hours on a specific invoice object
+// - Body - { id, description, rate, hours } 
+// - '/api/editInvoice'
+// - { message: "", updatedInvoice: {} }
+app.put('/api/editInvoice', handlerFunctions.editInvoice)
+
 // Open up  door to server
 ViteExpress.listen(app, 2319, () => console.log(`We've got a 23-19! Report to http://localhost:2319`));
